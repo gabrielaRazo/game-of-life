@@ -18,8 +18,31 @@ const Grid = () => {
     setGrid(grid);
   };
 
+  console.log('grid', grid);
+
+  const randomGrid = () => {
+    const grid = [];
+    for (let i = 0; i < numRows; i++) {
+      const row = [];
+      for (let j = 0; j < numCols; j++) {
+        row.push(Math.floor(Math.random() * 2));
+      }
+      grid.push(row);
+    }
+    return grid;
+  };
+
+  const onColorCell = (i, j) => {
+    const newGrid = JSON.parse(JSON.stringify(grid));
+    console.log('newGrid', newGrid);
+    // Toggle the cell between "alive" and "dead"
+    newGrid[i][j] = grid[i][j] === 1 ? 0 : 1;
+    setGrid(newGrid);
+  };
+
   useEffect(() => {
     onEmptyGrid();
+    //setGrid(randomGrid());
   }, []);
 
   return (
@@ -39,12 +62,18 @@ const Grid = () => {
             {grid &&
               grid.map((rows, i) =>
                 rows.map((cols, j) => (
-                  <div
-                    className="tableStyle"
-                    style={{
-                      backgroundColor: grid[i][j] ? 'pink' : 'white',
-                    }}
-                  />
+                  <>
+                    <div
+                      key={`${i}-${j}`}
+                      onClick={() => onColorCell(i, j)}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        border: '1px solid black',
+                        backgroundColor: grid[i][j] ? 'red' : 'white',
+                      }}
+                    />
+                  </>
                 ))
               )}
           </div>
