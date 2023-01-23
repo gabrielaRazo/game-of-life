@@ -4,6 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import './grid.css';
 
@@ -110,54 +112,67 @@ const Grid = () => {
   return (
     <Container>
       <Row>
-        <div className="space" />
         <Col
           lg={{ span: 6, offset: 3 }}
           md={{ span: 6, offset: 1 }}
           xs={{ span: 12, offset: 0 }}
         >
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: `repeat(${numCols}, 20px)`,
-            }}
-          >
-            {grid &&
-              grid.map((rows, i) =>
-                rows.map((cols, j) => (
-                  <>
-                    <div
-                      key={`${i}-${j}`}
-                      onClick={() => onColorCell(i, j)}
-                      style={{
-                        width: 20,
-                        height: 20,
-                        border: '1px solid black',
-                        backgroundColor: grid[i][j] ? 'red' : 'white',
-                      }}
-                    />
-                  </>
-                ))
-              )}
-          </div>
-          <div className="space" />
-          <Stack direction="horizontal" gap={3}>
-            <Button
-              variant="outline-secondary"
-              onClick={() => setRunning(!running)}
-            >
-              {running ? 'Stop' : 'Start'}
-            </Button>
-            <Button variant="outline-secondary" onClick={() => onEmptyGrid()}>
-              Restart
-            </Button>
-            <Button
-              variant="outline-secondary"
-              onClick={() => setGrid(randomGrid())}
-            >
-              Random
-            </Button>
-          </Stack>
+          <h1 className="title">Game of Life</h1>
+          <Card>
+            <Card.Body>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: `repeat(${numCols}, 20px)`,
+                }}
+              >
+                {grid &&
+                  grid.map((rows, i) =>
+                    rows.map((cols, j) => (
+                      <>
+                        <div
+                          key={`${i}-${j}`}
+                          onClick={() => onColorCell(i, j)}
+                          style={{
+                            width: 20,
+                            height: 20,
+                            border: '1px solid black',
+                            backgroundColor: grid[i][j] ? 'red' : 'white',
+                          }}
+                        />
+                      </>
+                    ))
+                  )}
+              </div>
+            </Card.Body>
+
+            <ListGroup className="list-group-flush">
+              <Container fluid>
+                <div className="space" />
+                <Stack direction="horizontal" gap={3}>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => setRunning(!running)}
+                  >
+                    {running ? 'Stop' : 'Start'}
+                  </Button>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => onEmptyGrid()}
+                  >
+                    Restart
+                  </Button>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => setGrid(randomGrid())}
+                  >
+                    Random
+                  </Button>
+                </Stack>
+                <div className="space" />
+              </Container>
+            </ListGroup>
+          </Card>
         </Col>
       </Row>
     </Container>
