@@ -85,6 +85,13 @@ const Grid = () => {
         }
       }
     }
+    const checkNewGrid = newGrid.every((row) =>
+      row.every((cell) => cell === 0)
+    );
+    console.log('checkNewGrid', checkNewGrid);
+    if (checkNewGrid) {
+      setRunning(false);
+    }
     return newGrid;
   };
 
